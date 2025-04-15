@@ -4,8 +4,8 @@ go 1.22.1
 
 require (
 	cloud.google.com/go/firestore v1.15.0
-	github.com/go-chi/chi v1.5.5
 	github.com/gorilla/mux v1.8.1
+	github.com/mattn/go-sqlite3 v1.14.27
 	github.com/stretchr/testify v1.9.0
 )
 

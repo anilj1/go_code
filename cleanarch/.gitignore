@@ -1,0 +1,31 @@
+# Binaries for programs and plugins
+*.exe
+*.so
+*.dll
+
+# Test binary, build cache, and build output
+*.test
+*.o
+_obj
+_test
+testdata
+*.db
+
+# Dependencies (modules/v2+)
+/vendor/
+
+# Go workspace (go 1.18+)
+go.work
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+
+# Coverage files
+*.out
+*.cov

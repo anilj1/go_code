@@ -25,11 +25,15 @@ func (mock *MockRepository) FindAll() ([]entity.Post, error) {
 	return result.([]entity.Post), args.Error(1)
 }
 
+func (mock *MockRepository) Delete(post *entity.Post) error {
+	return nil
+}
+
 func TestValidateEmptyPost(t *testing.T) {
 	testService := NewPostService(nil)
 	err := testService.Validate(nil)
 	assert.NotNil(t, err)
-	assert.Equal(t, "The post is empty", err.Error())
+	assert.Equal(t, "the post is empty", err.Error())
 }
 
 func TestValidateEmptyPostTitle(t *testing.T) {
@@ -37,7 +41,7 @@ func TestValidateEmptyPostTitle(t *testing.T) {
 	post := entity.Post{Id: rand.Int63(), Title: "", Text: ""}
 	err := testService.Validate(&post)
 	assert.NotNil(t, err)
-	assert.Equal(t, "The post title is empty", err.Error())
+	assert.Equal(t, "the post title is empty", err.Error())
 }
 
 func TestValidateValidPost(t *testing.T) {

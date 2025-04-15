@@ -24,7 +24,7 @@ func (r repo) Save(post *entity.Post) (*entity.Post, error) {
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, projectId)
 	if err != nil {
-		log.Fatal("Failed to create a Firestore client: %v", err)
+		log.Fatalf("failed to create a Firestore client: %v", err)
 		return nil, err
 	}
 
@@ -35,7 +35,7 @@ func (r repo) Save(post *entity.Post) (*entity.Post, error) {
 		"Text":  post.Text,
 	})
 	if err1 != nil {
-		log.Fatal("Failed adding a new post: %v", err)
+		log.Fatalf("failed adding a new post: %v", err)
 		return nil, err
 	}
 
@@ -46,7 +46,7 @@ func (r repo) FindAll() ([]entity.Post, error) {
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, projectId)
 	if err != nil {
-		log.Fatal("Failed to create a Firestore client: %v", err)
+		log.Fatalf("failed to create a Firestore client: %v", err)
 		return nil, err
 	}
 	defer client.Close()
@@ -67,4 +67,9 @@ func (r repo) FindAll() ([]entity.Post, error) {
 		}
 	}
 	return posts, nil
+}
+
+// Delete : TODO
+func (r *repo) Delete(post *entity.Post) error {
+	return nil
 }

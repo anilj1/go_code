@@ -25,7 +25,7 @@ func (ctrl *controller) GetPosts(resp http.ResponseWriter, req *http.Request) {
 	posts, err := postService.FindAll()
 	if err != nil {
 		resp.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(resp).Encode(errors.New("Error getting all posts data"))
+		json.NewEncoder(resp).Encode(errors.New("error getting all posts data"))
 		return
 	}
 	resp.WriteHeader(http.StatusOK)
@@ -38,7 +38,7 @@ func (ctrl *controller) AddPosts(resp http.ResponseWriter, req *http.Request) {
 	err := json.NewDecoder(req.Body).Decode(&post)
 	if err != nil {
 		resp.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(resp).Encode(errors.New("Error unmarshaling the posts array"))
+		json.NewEncoder(resp).Encode(errors.New("error unmarshaling the posts array"))
 		return
 	}
 
