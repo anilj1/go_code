@@ -7,6 +7,7 @@ import (
 	"cleanarch/service"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 var (
@@ -26,10 +27,11 @@ var (
 	// 4. Service is where the use case or business logic is implemented.
 	// 		In order to test the business logic without depending on external dependencies,
 	// 		we mock the repository interface.
+	stop                                     = make(chan os.Signal, 1)
 	postRepository repository.PostRepository = repository.NewSQLiteRepository()
 	postService    service.PostService       = service.NewPostService(postRepository)
 	postController controller.PostController = controller.NewPostController(postService)
-	httpRouter     router.Router             = router.NewMuxRouter()
+	httpRouter     router.Router             = router.NewMuxRouter(stop)
 )
 
 func main() {

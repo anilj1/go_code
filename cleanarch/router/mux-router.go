@@ -10,14 +10,18 @@ import (
 	"time"
 )
 
-type muxRouter struct{}
+type muxRouter struct {
+	stopChan chan os.Signal
+}
 
 var (
 	muxDispatcher = mux.NewRouter()
 )
 
-func NewMuxRouter() Router {
-	return &muxRouter{}
+func NewMuxRouter(stopChan chan os.Signal) Router {
+	return &muxRouter{
+		stopChan: stopChan,
+	}
 }
 
 func (mr muxRouter) GET(uri string, f func(resp http.ResponseWriter, req *http.Request)) {
@@ -46,7 +50,7 @@ func (mr muxRouter) SERVE(port string) {
 	}()
 
 	// Block until an interrupt signal is received
-	<-stop
+	<-mr.stopChan
 
 	fmt.Println("Shutting down server...")
 

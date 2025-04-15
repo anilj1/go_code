@@ -18,7 +18,8 @@ func mockHandler(resp http.ResponseWriter, req *http.Request) {
 }
 
 func TestMuxRouter_SERVE(t *testing.T) {
-	router := NewMuxRouter()
+	stop := make(chan os.Signal, 1)
+	router := NewMuxRouter(stop)
 
 	// Capture output
 	var buf bytes.Buffer
@@ -28,7 +29,7 @@ func TestMuxRouter_SERVE(t *testing.T) {
 	go router.SERVE(":8080")
 
 	// Simulate interrupt signal to stop the server
-	stop := make(chan os.Signal, 1)
+	time.Sleep(1 * time.Second)
 	signal.Notify(stop, os.Interrupt)
 	stop <- os.Interrupt
 
@@ -44,7 +45,8 @@ func TestMuxRouter_SERVE(t *testing.T) {
 }
 
 func TestMuxRouter_GET(t *testing.T) {
-	router := NewMuxRouter()
+	stop := make(chan os.Signal, 1)
+	router := NewMuxRouter(stop)
 	router.GET("/test-get", mockHandler)
 
 	req, err := http.NewRequest("GET", "/test-get", nil)
@@ -66,7 +68,8 @@ func TestMuxRouter_GET(t *testing.T) {
 }
 
 func TestMuxRouter_POST(t *testing.T) {
-	router := NewMuxRouter()
+	stop := make(chan os.Signal, 1)
+	router := NewMuxRouter(stop)
 	router.POST("/test-post", mockHandler)
 
 	req, err := http.NewRequest("POST", "/test-post", nil)
